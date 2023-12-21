@@ -59,7 +59,7 @@ public class Menu {
 	                    mostrarTodosLosTipos();
 	                    break;
 	                case 5:
-	                    //mostrarTipoEspecifico();
+	                    mostrarTipoEspecifico();
 	                    break;
 	                case 6:
 	                    crearComponente();
@@ -68,7 +68,7 @@ public class Menu {
 	                    listarComponentes();
 	                    break;
 	                case 8:
-	                    //borrarComponente();
+	                    ComponenteDao.borrarComponente();
 	                    break;
 	                case 9:
 	                    //modificarComponente();
@@ -82,6 +82,20 @@ public class Menu {
 	           }
 	       } while (option != 11);
 	   }
+	   
+	   
+	   
+	   public void mostrarTipoEspecifico() {
+		    Scanner scanner = new Scanner(System.in);
+		    System.out.println("Ingrese el nombre del tipo que desea ver:");
+		    String nombreTipo = scanner.nextLine();
+		    int idTipo = TipoDao.isTipoInBD(nombreTipo);
+		    if (idTipo != 0) {
+		        System.out.println("Tipo encontrado - ID: " + idTipo + ", Nombre: " + nombreTipo);
+		    } else {
+		        System.out.println("Tipo no encontrado.");
+		    }
+		}
 	   private void mostrarTodosLosTipos() {
 		TipoDao.seleccionarTipos().forEach(System.out::println);
 		

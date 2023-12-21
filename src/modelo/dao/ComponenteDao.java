@@ -3,6 +3,7 @@ package modelo.dao;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import modelo.data.Componente;
 import modelo.data.Tipo;
@@ -56,5 +57,39 @@ public class ComponenteDao {
 		}
 		return listaComponente;
 	}
+	
+	public static void borrarComponente() {
+	    Scanner scanner = new Scanner(System.in);
+
+	    System.out.println("Ingrese el ID del componente que desea eliminar:");
+	    int idComponente = scanner.nextInt();
+
+	    System.out.println("¿Está seguro de que desea eliminar este componente? (si/no)");
+	    String confirmacion = scanner.next().toLowerCase();
+
+	    if (confirmacion.equals("si")) {
+	        Conexion con = new Conexion();
+	        connection = con.getJdbcConnection();
+
+	        try {
+	            String deleteComponenteSQL = "DELETE FROM componente WHERE ID_componente = ?";
+	            PreparedStatement preparedStatement = connection.prepareStatement(deleteComponenteSQL);
+
+	            preparedStatement.setInt(1, idComponente);
+
+	            int rowsDeleted = preparedStatement.executeUpdate();
+	            if (rowsDeleted > 0) {
+	                System.out.println("El componente se ha eliminado exitosamente.");
+	            } else {
+	                System.out.println("No se pudo eliminar el componente.");
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    } else {
+	        System.out.println("Operación de eliminación cancelada.");
+	    }
+	}
+
 	
 }
